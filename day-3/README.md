@@ -22,7 +22,7 @@ A GenAI powered tool that generates optimized Dockerfiles based on programming l
 
 3. **Pull Llama3 Model**
    ```bash
-   ollama pull llama3.2:1b
+   ollama pull llama3.2
    ```
 
 ## 🚀 Project Setup
