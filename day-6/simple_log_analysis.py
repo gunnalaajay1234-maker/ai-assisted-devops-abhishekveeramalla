@@ -8,7 +8,10 @@ log_file = "system_logs.txt"
 log_entries = []
 with open(log_file, "r") as file:
     for line in file:
-        match = re.match(r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (\w+) (.+)", line.strip())
+        match = re.match(
+            r"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (\w+) (.+)",
+            line.strip()
+        )
         if match:
             timestamp, level, message = match.groups()
             log_entries.append([timestamp, level, message])
@@ -18,9 +21,11 @@ df = pd.DataFrame(log_entries, columns=["timestamp", "level", "message"])
 df["timestamp"] = pd.to_datetime(df["timestamp"])
 
 # Count errors in the last 30 seconds
-error_counts = Counter(df[df["level"] == "ERROR"]["timestamp"].dt.floor("30S"))
+error_counts = Counter(
+    df[df["level"] == "ERROR"]["timestamp"].dt.floor("30s")
+)
 
-# Threshold for detecting an anomaly (too many errors in a short time)
+# Threshold for detecting an anomaly
 threshold = 3
 
 # Detect error spikes
@@ -31,4 +36,3 @@ for time, count in error_counts.items():
 # Show logs with anomalies
 print("\nFull Log Analysis:")
 print(df)
-
